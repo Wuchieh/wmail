@@ -1,6 +1,6 @@
 <template>
-  <v-container class="align-center justify-center h-100" fluid>
-    <v-form class="">
+  <v-container class="align-center justify-center h-100 d-flex" fluid>
+    <v-form class="w-100 w-md-66 w-lg-50">
       <v-text-field
           v-model="formData.email"
           type="email"

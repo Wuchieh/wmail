@@ -12,8 +12,10 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SendMail: typeof import('./src/components/SendMail.vue')['default']
+    SendMailRecords: typeof import('./src/components/SendMailRecords.vue')['default']
     SettingAccount: typeof import('./src/components/SettingAccount.vue')['default']
     SettingLayout: typeof import('./src/components/SettingLayout.vue')['default']
+    ShowEmailData: typeof import('./src/components/ShowEmailData.vue')['default']
     Snackbars: typeof import('./src/components/Snackbars.vue')['default']
   }
 }

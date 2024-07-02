@@ -56,6 +56,15 @@ function SendMail(to: string, subject: string, content: string) {
   })
 }
 
+function GetSendMailRecord(token: string) {
+  if (!token.startsWith("Bearer ")) token = `Bearer ${token}`
+  return email.apiV1MailListGet(token)
+}
+
+function GetEmail(token: string, mailId: string) {
+  if (!token.startsWith("Bearer ")) token = `Bearer ${token}`
+  return email.apiV1MailMailIdGet(token, mailId)
+}
 
 export {
   Login,
@@ -63,4 +72,6 @@ export {
   GetAccountInfo,
   UpdateToken,
   UpdateAccount,
+  GetSendMailRecord,
+  GetEmail,
 }

@@ -130,10 +130,10 @@ export interface ApiV1AccountInfoGet200Response {
 export interface ApiV1MailListGet200Response {
     /**
      * 
-     * @type {Array<Array<MailRecord>>}
+     * @type {Array<MailRecord>}
      * @memberof ApiV1MailListGet200Response
      */
-    'data'?: Array<Array<MailRecord>>;
+    'data'?: Array<MailRecord>;
     /**
      * 
      * @type {UtilsResponse}
@@ -144,9 +144,113 @@ export interface ApiV1MailListGet200Response {
 /**
  * 
  * @export
+ * @interface ApiV1MailMailIdGet200Response
+ */
+export interface ApiV1MailMailIdGet200Response {
+    /**
+     * 
+     * @type {MailEmail}
+     * @memberof ApiV1MailMailIdGet200Response
+     */
+    'data'?: MailEmail;
+    /**
+     * 
+     * @type {UtilsResponse}
+     * @memberof ApiV1MailMailIdGet200Response
+     */
+    'utils.Response'?: UtilsResponse;
+}
+/**
+ * 
+ * @export
+ * @interface MailEmail
+ */
+export interface MailEmail {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MailEmail
+     */
+    'bcc'?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MailEmail
+     */
+    'cc'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailEmail
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailEmail
+     */
+    'from'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailEmail
+     */
+    'html'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailEmail
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailEmail
+     */
+    'last_event'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailEmail
+     */
+    'object'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MailEmail
+     */
+    'reply_to'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailEmail
+     */
+    'subject'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MailEmail
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MailEmail
+     */
+    'to'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface MailRecord
  */
 export interface MailRecord {
+    /**
+     * 
+     * @type {string}
+     * @memberof MailRecord
+     */
+    'create_time'?: string;
     /**
      * 
      * @type {string}
@@ -651,6 +755,47 @@ export const EmailApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * no description
+         * @summary 取得郵件內容
+         * @param {string} authorization token
+         * @param {string} mailId mail id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1MailMailIdGet: async (authorization: string, mailId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authorization' is not null or undefined
+            assertParamExists('apiV1MailMailIdGet', 'authorization', authorization)
+            // verify required parameter 'mailId' is not null or undefined
+            assertParamExists('apiV1MailMailIdGet', 'mailId', mailId)
+            const localVarPath = `/api/v1/mail/{mailId}`
+                .replace(`{${"mailId"}}`, encodeURIComponent(String(mailId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * no description
          * @summary 寄送Email
          * @param {string} authorization token
          * @param {MailSendReq} request request
@@ -715,6 +860,18 @@ export const EmailApiFp = function(configuration?: Configuration) {
         },
         /**
          * no description
+         * @summary 取得郵件內容
+         * @param {string} authorization token
+         * @param {string} mailId mail id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiV1MailMailIdGet(authorization: string, mailId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiV1MailMailIdGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1MailMailIdGet(authorization, mailId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * no description
          * @summary 寄送Email
          * @param {string} authorization token
          * @param {MailSendReq} request request
@@ -747,6 +904,17 @@ export const EmailApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * no description
+         * @summary 取得郵件內容
+         * @param {string} authorization token
+         * @param {string} mailId mail id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1MailMailIdGet(authorization: string, mailId: string, options?: any): AxiosPromise<ApiV1MailMailIdGet200Response> {
+            return localVarFp.apiV1MailMailIdGet(authorization, mailId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * no description
          * @summary 寄送Email
          * @param {string} authorization token
          * @param {MailSendReq} request request
@@ -776,6 +944,19 @@ export class EmailApi extends BaseAPI {
      */
     public apiV1MailListGet(authorization: string, options?: AxiosRequestConfig) {
         return EmailApiFp(this.configuration).apiV1MailListGet(authorization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * no description
+     * @summary 取得郵件內容
+     * @param {string} authorization token
+     * @param {string} mailId mail id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EmailApi
+     */
+    public apiV1MailMailIdGet(authorization: string, mailId: string, options?: AxiosRequestConfig) {
+        return EmailApiFp(this.configuration).apiV1MailMailIdGet(authorization, mailId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

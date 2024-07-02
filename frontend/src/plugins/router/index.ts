@@ -5,6 +5,7 @@ import SendMail from "@/components/SendMail.vue";
 import MainLayout from "@/components/MainLayout.vue";
 import SettingLayout from "@/components/SettingLayout.vue";
 import SettingAccount from "@/components/SettingAccount.vue";
+import SendMailRecords from "@/components/SendMailRecords.vue";
 
 
 const routes: RouteRecordRaw[] = [
@@ -13,6 +14,7 @@ const routes: RouteRecordRaw[] = [
     path: '/mail', component: MainLayout,
     children: [
       {path: '', component: SendMail, name: 'send_mail'},
+      {path: '/mail_records', component: SendMailRecords, name: 'mail_records'},
       {
         path: '/setting', component: SettingLayout, children: [{
           path: '', component: SettingAccount, name: 'setting'
@@ -30,6 +32,7 @@ const router = createRouter({
 export const LOGIN_PAGE = {name: 'login'}
 export const MAIN_PAGE = {name: 'send_mail'}
 export const SETTING_PAGE = {name: 'setting'}
+export const MAIL_RECORDS_PAGE = {name: 'mail_records'}
 
 router.beforeEach(async (to, from, next) => {
   const app = useStore()

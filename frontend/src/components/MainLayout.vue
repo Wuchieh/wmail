@@ -2,7 +2,14 @@
   <v-responsive class="border rounded">
     <v-app :theme="theme">
       <v-app-bar class="px-3">
+        <v-img
+            src="/favicon.ico"
+            @click="goSendMail"
+            max-width="50"
+            max-height="64"
+            class="cursor-pointer me-3"/>
         <v-btn text="寄信" @click="goSendMail"/>
+        <v-btn text="紀錄" @click="goMailRecordsPage"/>
         <v-spacer></v-spacer>
         <v-menu>
           <template v-slot:activator="{ props }">
@@ -47,7 +54,7 @@
 import {useStore} from "@/plugins/store/store";
 import {ref} from 'vue'
 import {useRouter} from "vue-router";
-import {LOGIN_PAGE, MAIN_PAGE, SETTING_PAGE} from "@/plugins/router";
+import {LOGIN_PAGE, MAIL_RECORDS_PAGE, MAIN_PAGE, SETTING_PAGE} from "@/plugins/router";
 
 const {account, clearAccountData} = useStore()
 const router = useRouter()
@@ -79,6 +86,9 @@ const goSetting = () => {
 
 const goSendMail = () => {
   router.push(MAIN_PAGE)
+}
+const goMailRecordsPage=()=>{
+  router.push(MAIL_RECORDS_PAGE)
 }
 </script>
 

@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
-import {GetAccountInfo, UpdateToken} from "@/api";
+import {GetAccountInfo, GetEmail, GetSendMailRecord, UpdateToken} from "@/api";
+import {MailEmail, MailRecord} from "@/api/swag";
 
 const KTOKEN = "token"
 
@@ -57,5 +58,48 @@ export const useStore = defineStore('app', () => {
     account.value.name = ''
   }
 
-  return {account, setToken, getToken, refreshAccount, clearAccountData}
+  const sendMailRecord = ref<MailRecord[]>([])
+
+  const refreshSendMailRecord = async () => {
+    const token = getToken()
+    return GetSendMailRecord(token)
+        .then(res => {
+          if (res.data.data) {
+            sendMailRecord.value = res.data.data
+          }
+        })
+  }
+
+  const mailRecordData: { [keys: string]: MailEmail } = {}
+  const getMailRecordData = async (mailID: string) => {
+    const mail = mailRecordData[mailID]
+    if (mail) return mail
+
+    const token = getToken()
+    return await GetEmail(token, mailID)
+        .then(res => {
+          if (res.data.data) {
+            mailRecordData[mailID] = res.data.data
+          }
+          return mailRecordData[mailID]
+        })
+        .catch(err => {
+          try {
+            return `${err.response.data['message']}`
+          } catch (e) {
+            return '網路狀態異常'
+          }
+        })
+  }
+
+  return {
+    account,
+    setToken,
+    getToken,
+    refreshAccount,
+    clearAccountData,
+    sendMailRecord,
+    refreshSendMailRecord,
+    getMailRecordData
+  }
 })
