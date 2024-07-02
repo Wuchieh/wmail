@@ -19,6 +19,7 @@
           text="登入"
           @click="login"/>
     </v-form>
+    <div class="position-absolute" style="bottom: 15px;right: 15px">ver 0.1.0</div>
   </v-container>
   <snackbars ref="SnackbarsRef"/>
 </template>

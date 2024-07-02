@@ -1,12 +1,11 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
-import {useStore} from "@/plugins/store/store";
+import {GetData, KTOKEN, useStore} from "@/plugins/store/store";
 import Login from "@/components/Login.vue";
 import SendMail from "@/components/SendMail.vue";
 import MainLayout from "@/components/MainLayout.vue";
 import SettingLayout from "@/components/SettingLayout.vue";
 import SettingAccount from "@/components/SettingAccount.vue";
 import SendMailRecords from "@/components/SendMailRecords.vue";
-
 
 const routes: RouteRecordRaw[] = [
   {path: '', component: Login, name: 'login'},
@@ -36,7 +35,22 @@ export const MAIL_RECORDS_PAGE = {name: 'mail_records'}
 
 router.beforeEach(async (to, from, next) => {
   const app = useStore()
-  const token = app.getToken()
+  let token = app.getToken()
+
+  if (!token) {
+    await GetData(KTOKEN)
+      .then(res => {
+        if (res.value) {
+          token = res.value
+          app.setToken(token)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  console.log(`是否有token: ${!!token}`)
 
   if (!token) {
     if (to.name == LOGIN_PAGE.name) next()
@@ -49,11 +63,14 @@ router.beforeEach(async (to, from, next) => {
     if (resp) {
       console.log(resp)
       next(LOGIN_PAGE)
-      return
+    } else {
+      next(MAIN_PAGE)
     }
-
+  } else if (to.name === LOGIN_PAGE.name) {
+    next(MAIN_PAGE)
+  } else {
+    next()
   }
-  next()
 })
 
 export default router

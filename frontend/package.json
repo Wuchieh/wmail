@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "@capacitor/android": "^6.1.0",
-    "@capacitor/cli": "^6.1.0",
     "@capacitor/core": "^6.1.0",
+    "@capacitor/ios": "^6.1.0",
+    "@capacitor/preferences": "^6.0.1",
     "@mdi/font": "6.2.95",
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.7.2",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@babel/types": "^7.24.0",
+    "@capacitor/cli": "^6.1.0",
     "@types/node": "^20.11.25",
     "@vitejs/plugin-vue": "^5.0.4",
     "sass": "^1.71.1",

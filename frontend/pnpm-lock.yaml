@@ -11,12 +11,15 @@ importers:
       '@capacitor/android':
         specifier: ^6.1.0
         version: 6.1.0(@capacitor/core@6.1.0)
-      '@capacitor/cli':
-        specifier: ^6.1.0
-        version: 6.1.0
       '@capacitor/core':
         specifier: ^6.1.0
         version: 6.1.0
+      '@capacitor/ios':
+        specifier: ^6.1.0
+        version: 6.1.0(@capacitor/core@6.1.0)
+      '@capacitor/preferences':
+        specifier: ^6.0.1
+        version: 6.0.1(@capacitor/core@6.1.0)
       '@mdi/font':
         specifier: 6.2.95
         version: 6.2.95
@@ -48,6 +51,9 @@ importers:
       '@babel/types':
         specifier: ^7.24.0
         version: 7.24.6
+      '@capacitor/cli':
+        specifier: ^6.1.0
+        version: 6.1.0
       '@types/node':
         specifier: ^20.11.25
         version: 20.12.13
@@ -110,6 +116,16 @@ packages:
 
   '@capacitor/core@6.1.0':
     resolution: {integrity: sha512-Kt4ONm0X9xxJXn9Q73oBaKdzep5B/VJw3VjXa2eGul4cD2k37mJwgjpXSMRnLH0Aju5bCiRL8J/hMAfTlokO6A==}
+
+  '@capacitor/ios@6.1.0':
+    resolution: {integrity: sha512-ex2q0LAyDDgfJj4fKDQuSNUYSpic3939/8A/sIIIxslwuRBF5i5fuhAngu6BhCt/pQSfEETcHtg2j2vD+YEZ2w==}
+    peerDependencies:
+      '@capacitor/core': ^6.1.0
+
+  '@capacitor/preferences@6.0.1':
+    resolution: {integrity: sha512-5UvSK3O/tgPcQ1QyX0zYjb0uujFw+PQgYUSt6i2evf609jAIo7QG1IUZzGb6swEPCpk621wEc6R7Yq/Ywa3GPA==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
 
   '@esbuild/aix-ppc64@0.20.2':
     resolution: {integrity: sha512-D+EBOJHXdNZcLJRBkhENNG8Wji2kgc9AZ9KiPr1JuZjsNtyHzrsfLRrY0tk2H2aoFu6RANO1y1iPPUCDYWkb5g==}
@@ -1348,6 +1364,14 @@ snapshots:
   '@capacitor/core@6.1.0':
     dependencies:
       tslib: 2.6.3
+
+  '@capacitor/ios@6.1.0(@capacitor/core@6.1.0)':
+    dependencies:
+      '@capacitor/core': 6.1.0
+
+  '@capacitor/preferences@6.0.1(@capacitor/core@6.1.0)':
+    dependencies:
+      '@capacitor/core': 6.1.0
 
   '@esbuild/aix-ppc64@0.20.2':
     optional: true

@@ -51,8 +51,8 @@
 </template>
 
 <script setup lang="ts">
-import {useStore} from "@/plugins/store/store";
-import {ref} from 'vue'
+import {GetData, SetData, useStore} from "@/plugins/store/store";
+import {onMounted, ref} from 'vue'
 import {useRouter} from "vue-router";
 import {LOGIN_PAGE, MAIL_RECORDS_PAGE, MAIN_PAGE, SETTING_PAGE} from "@/plugins/router";
 
@@ -60,19 +60,11 @@ const {account, clearAccountData} = useStore()
 const router = useRouter()
 
 const KTHEME = 'theme'
-const theme = ref(function () {
-  const theme = localStorage.getItem(KTHEME)
-  switch (theme) {
-    case 'light':
-    case 'dark':
-      return theme
-  }
-  return 'dark'
-}())
+const theme = ref('dark')
 
 const themeTrigger = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
-  localStorage.setItem(KTHEME, theme.value)
+  SetData(KTHEME, theme.value).then()
 }
 
 const logout = () => {
@@ -90,6 +82,13 @@ const goSendMail = () => {
 const goMailRecordsPage=()=>{
   router.push(MAIL_RECORDS_PAGE)
 }
+
+onMounted(async ()=>{
+  const _theme = await GetData(KTHEME)
+  if(_theme.value){
+    theme.value = _theme.value
+  }
+})
 </script>
 
 <style scoped>
