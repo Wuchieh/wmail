@@ -1,5 +1,14 @@
 <template>
-  <v-data-table :items="sendMailRecord" :headers="headers" :loading="tableRef.loading">
+  <v-container fluid>
+    <v-btn
+      @click="refresh"
+      :loading="btns.refresh.loading"
+      text="刷新"/>
+  </v-container>
+  <v-data-table
+    :items="sendMailRecord"
+    :headers="headers"
+    :loading="tableRef.loading">
     <template v-slot:[`item.getData`]="{item}">
       <v-btn @click="getData(item.mail_id)">
         查看內容
@@ -24,6 +33,9 @@ const snackbarsRef = ref<null | InstanceType<typeof Snackbars>>(null)
 const showEmailDataRef = ref<null | InstanceType<typeof ShowEmailData>>(null)
 const tableRef = ref({
   loading: true,
+})
+const btns = ref({
+  refresh: {loading: false}
 })
 const app = useStore()
 const {refreshSendMailRecord, getMailRecordData} = app
@@ -50,28 +62,38 @@ const getData = async (mailId?: string) => {
     })
     return
   }
-  if (!showEmailDataRef.value)  return
+  if (!showEmailDataRef.value) return
   showEmailDataRef.value.ShowSkeleton()
   const resp = await getMailRecordData(mailId)
   if (typeof resp === "string") {
-    if (!snackbarsRef.value) return
-    snackbarsRef.value.Show({
-      content: resp,
-      color: 'danger'
-    })
-  }else{
+    if (snackbarsRef.value) {
+      snackbarsRef.value.Show({
+        content: resp,
+        color: 'danger'
+      })
+    }
+    setTimeout(showEmailDataRef.value.Hide, 300)
+  } else {
     showEmailDataRef.value.ShowData(resp)
   }
 }
 
+const refresh = async () => {
+  btns.value.refresh.loading = tableRef.value.loading = true
+  await refreshSendMailRecord()
+    .then()
+    .catch()
+  btns.value.refresh.loading =tableRef.value.loading = false
+}
+
 onMounted(() => {
   if (sendMailRecord.value.length == 0) refreshSendMailRecord()
-      .catch(err => {
-        console.log(err)
-      })
-      .then(() => {
-        tableRef.value.loading = false
-      })
+    .catch(err => {
+      console.log(err)
+    })
+    .then(() => {
+      tableRef.value.loading = false
+    })
   else tableRef.value.loading = false
 })
 </script>

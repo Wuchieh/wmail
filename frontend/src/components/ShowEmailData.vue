@@ -5,8 +5,11 @@
       <v-skeleton-loader type="article"/>
       <v-skeleton-loader type="article"/>
     </v-sheet>
-    <v-card title="123" v-else>
-      <v-card-text>
+    <v-card :title="data.subject" v-else>
+      <v-card-text v-show="!showFull">
+        <div class="mb-3">
+          <v-btn color="info" @click="showFull=!showFull">顯示完整內容</v-btn>
+        </div>
         <div>Email ID: {{ data.id }}</div>
         <div>收件者: {{ data.to ? data.to.join(',') : '' }}</div>
         <div>寄件時間: {{ parseDate(new Date(data.created_at as string), 'YYYY-MM-DD hh:mm:ss') }}</div>
@@ -17,12 +20,22 @@
           <div v-else v-html="data.html"></div>
         </div>
       </v-card-text>
+
+      <v-card-text v-show="showFull">
+        <div class="mb-3">
+          <v-btn color="info" @click="showFull=!showFull">顯示完整內容</v-btn>
+        </div>
+        <div v-for="(v,k) in data">
+          {{k}}: {{v}}
+        </div>
+      </v-card-text>
+
       <v-card-actions>
         <v-spacer></v-spacer>
 
         <v-btn
-            text="Close Dialog"
-            @click="show = false"
+          text="關閉"
+          @click="show = false"
         ></v-btn>
       </v-card-actions>
     </v-card>
@@ -37,6 +50,8 @@ import {parseDate} from "@/pkg";
 const show = ref(false)
 const loading = ref(false)
 
+const showFull = ref(false)
+
 const ShowSkeleton = () => {
   show.value = true
   loading.value = true
@@ -44,6 +59,7 @@ const ShowSkeleton = () => {
 
 const ShowData = (showData: MailEmail) => {
   data.value = showData
+  showFull.value = false
   loading.value = false
   show.value = true
 }
@@ -52,6 +68,9 @@ const Show = () => {
   show.value = true
 }
 
+const Hide = () => {
+  show.value = false
+}
 
 const data = ref<MailEmail>({
   "id": "",
@@ -71,6 +90,7 @@ defineExpose({
   Show,
   ShowSkeleton,
   ShowData,
+  Hide,
 })
 </script>
 

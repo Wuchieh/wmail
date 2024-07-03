@@ -2,20 +2,26 @@
   <v-responsive class="border rounded">
     <v-app :theme="theme">
       <v-app-bar class="px-3">
-        <v-img
-            src="/favicon.ico"
-            @click="goSendMail"
+          <v-img
+            src="@/assets/logo.png"
+            @click="go(MAIN_PAGE)"
+            width="50"
+
             max-width="50"
             max-height="64"
             class="cursor-pointer me-3"/>
-        <v-btn text="寄信" @click="goSendMail"/>
-        <v-btn text="紀錄" @click="goMailRecordsPage"/>
+          <v-btn
+            v-for="v in mainItems"
+            :prepend-icon="v.icon"
+            :text="v.title"
+            @click="go(v.to)"/>
         <v-spacer></v-spacer>
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn
-                color="primary"
-                v-bind="props"
+              color=""
+              v-bind="props"
+              prepend-icon="mdi-account"
             >
               {{ account.name }}
             </v-btn>
@@ -27,7 +33,7 @@
                 主題切換
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="goSetting">
+            <v-list-item @click="go(SETTING_PAGE)">
               <v-list-item-title>
                 <v-icon icon="mdi-cog"/>
                 設定
@@ -44,48 +50,44 @@
       </v-app-bar>
 
       <v-main>
-          <router-view/>
+        <router-view/>
       </v-main>
     </v-app>
   </v-responsive>
 </template>
 
 <script setup lang="ts">
-import {GetData, SetData, useStore} from "@/plugins/store/store";
+import {GetData, KTHEME, SetData, useStore} from "@/plugins/store/store";
 import {onMounted, ref} from 'vue'
 import {useRouter} from "vue-router";
 import {LOGIN_PAGE, MAIL_RECORDS_PAGE, MAIN_PAGE, SETTING_PAGE} from "@/plugins/router";
 
 const {account, clearAccountData} = useStore()
 const router = useRouter()
-
-const KTHEME = 'theme'
 const theme = ref('dark')
+
+const mainItems = [
+  {icon: "mdi-email-edit-outline", to: MAIN_PAGE, title: "寄信"},
+  {icon: "mdi-history", to: MAIL_RECORDS_PAGE, title: "寄送紀錄"},
+]
 
 const themeTrigger = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
   SetData(KTHEME, theme.value).then()
 }
 
+const go = (to: { name: string }) => {
+  router.push(to)
+}
+
 const logout = () => {
   clearAccountData()
-  router.push(LOGIN_PAGE)
+  go(LOGIN_PAGE)
 }
 
-const goSetting = () => {
-  router.push(SETTING_PAGE)
-}
-
-const goSendMail = () => {
-  router.push(MAIN_PAGE)
-}
-const goMailRecordsPage=()=>{
-  router.push(MAIL_RECORDS_PAGE)
-}
-
-onMounted(async ()=>{
+onMounted(async () => {
   const _theme = await GetData(KTHEME)
-  if(_theme.value){
+  if (_theme.value) {
     theme.value = _theme.value
   }
 })

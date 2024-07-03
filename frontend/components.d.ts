@@ -15,6 +15,7 @@ declare module 'vue' {
     SendMailRecords: typeof import('./src/components/SendMailRecords.vue')['default']
     SettingAccount: typeof import('./src/components/SettingAccount.vue')['default']
     SettingLayout: typeof import('./src/components/SettingLayout.vue')['default']
+    SettingStyle: typeof import('./src/components/SettingStyle.vue')['default']
     ShowEmailData: typeof import('./src/components/ShowEmailData.vue')['default']
     Snackbars: typeof import('./src/components/Snackbars.vue')['default']
   }

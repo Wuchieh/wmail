@@ -6,18 +6,33 @@ import MainLayout from "@/components/MainLayout.vue";
 import SettingLayout from "@/components/SettingLayout.vue";
 import SettingAccount from "@/components/SettingAccount.vue";
 import SendMailRecords from "@/components/SendMailRecords.vue";
+import SettingStyle from "@/components/SettingStyle.vue";
+
+const LOGIN_PAGE = {name: 'login'}
+const MAIN_PAGE = {name: 'send_mail'}
+const SETTING_PAGE = {name: 'setting'}
+const SETTING_STYLE_PAGE = {name: 'setting_style'}
+const MAIL_RECORDS_PAGE = {name: 'mail_records'}
+
+export {
+  LOGIN_PAGE,
+  MAIN_PAGE,
+  SETTING_PAGE,
+  MAIL_RECORDS_PAGE,
+  SETTING_STYLE_PAGE,
+}
 
 const routes: RouteRecordRaw[] = [
-  {path: '', component: Login, name: 'login'},
+  {path: '', component: Login, name: LOGIN_PAGE.name},
   {
-    path: '/mail', component: MainLayout,
-    children: [
-      {path: '', component: SendMail, name: 'send_mail'},
-      {path: '/mail_records', component: SendMailRecords, name: 'mail_records'},
+    path: '/mail', component: MainLayout, children: [
+      {path: '', component: SendMail, name: MAIN_PAGE.name},
+      {path: '/records', component: SendMailRecords, name: MAIL_RECORDS_PAGE.name},
       {
-        path: '/setting', component: SettingLayout, children: [{
-          path: '', component: SettingAccount, name: 'setting'
-        }]
+        path: '/setting', component: SettingLayout, children: [
+          {path: '', component: SettingAccount, name: SETTING_PAGE.name},
+          {path: '/style', component: SettingStyle, name: SETTING_STYLE_PAGE.name},
+        ]
       }
     ]
   }
@@ -28,49 +43,50 @@ const router = createRouter({
   routes,
 })
 
-export const LOGIN_PAGE = {name: 'login'}
-export const MAIN_PAGE = {name: 'send_mail'}
-export const SETTING_PAGE = {name: 'setting'}
-export const MAIL_RECORDS_PAGE = {name: 'mail_records'}
-
 router.beforeEach(async (to, from, next) => {
   const app = useStore()
   let token = app.getToken()
 
+  // 如果 store 中沒有 token，嘗試從本地存儲獲取
   if (!token) {
-    await GetData(KTOKEN)
-      .then(res => {
-        if (res.value) {
-          token = res.value
-          app.setToken(token)
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    try {
+      const res = await GetData(KTOKEN)
+      if (res.value) {
+        token = res.value
+        app.setToken(token)
+      }
+    } catch (err) {
+      console.error('Error fetching token:', err)
+    }
   }
 
-  console.log(`是否有token: ${!!token}`)
-
+  // 如果沒有 token，重定向到登入頁面
   if (!token) {
-    if (to.name == LOGIN_PAGE.name) next()
-    next(LOGIN_PAGE)
+    if (to.name === LOGIN_PAGE.name) {
+      next()
+    } else {
+      next(LOGIN_PAGE)
+    }
     return
   }
 
+  // 如果帳戶資訊不完整，嘗試刷新
   if (app.account.email === '') {
-    const resp = await app.refreshAccount()
-    if (resp) {
-      console.log(resp)
-      next(LOGIN_PAGE)
-    } else {
-      next(MAIN_PAGE)
+    try {
+      await app.refreshAccount()
+    } catch (err) {
+      console.error('Error refreshing account:', err)
+      return next(LOGIN_PAGE)
     }
-  } else if (to.name === LOGIN_PAGE.name) {
-    next(MAIN_PAGE)
-  } else {
-    next()
   }
+
+  // 如果用戶已登入但嘗試訪問登入頁面，重定向到主頁
+  if (to.name === LOGIN_PAGE.name) {
+    return next(MAIN_PAGE)
+  }
+
+  // 其他情況，允許導航
+  next()
 })
 
 export default router

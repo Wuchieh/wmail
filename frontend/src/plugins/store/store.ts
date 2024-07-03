@@ -4,7 +4,11 @@ import {GetAccountInfo, GetEmail, GetSendMailRecord, UpdateToken} from "@/api";
 import {Preferences} from '@capacitor/preferences';
 import {MailEmail, MailRecord} from "@/api/swag";
 
-export const KTOKEN = "token"
+const KTOKEN = "token"
+const KTHEME = 'theme'
+const KTFS = 'text_field_style'
+
+export {KTOKEN,KTHEME,KTFS}
 
 export const SetData = (key: string, value: string) => {
   return Preferences.set({key, value})
@@ -99,6 +103,18 @@ export const useStore = defineStore('app', () => {
       })
   }
 
+  const defaults = ref({
+    VTextField: {
+      variant: '',
+    },
+  })
+
+  GetData(KTFS).then(res => {
+    defaults.value.VTextField.variant = res.value ?? 'outlined'
+  }).catch(() => {
+    defaults.value.VTextField.variant = 'outlined'
+  });
+
   return {
     account,
     setToken,
@@ -107,6 +123,7 @@ export const useStore = defineStore('app', () => {
     clearAccountData,
     sendMailRecord,
     refreshSendMailRecord,
-    getMailRecordData
+    getMailRecordData,
+    defaults
   }
 })
