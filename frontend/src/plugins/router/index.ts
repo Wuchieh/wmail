@@ -7,12 +7,14 @@ import SettingLayout from "@/components/SettingLayout.vue";
 import SettingAccount from "@/components/SettingAccount.vue";
 import SendMailRecords from "@/components/SendMailRecords.vue";
 import SettingStyle from "@/components/SettingStyle.vue";
+import Test from "@/components/Test.vue";
 
 const LOGIN_PAGE = {name: 'login'}
 const MAIN_PAGE = {name: 'send_mail'}
 const SETTING_PAGE = {name: 'setting'}
 const SETTING_STYLE_PAGE = {name: 'setting_style'}
 const MAIL_RECORDS_PAGE = {name: 'mail_records'}
+const TEST_PAGE = {name: 'test'}
 
 export {
   LOGIN_PAGE,
@@ -20,6 +22,7 @@ export {
   SETTING_PAGE,
   MAIL_RECORDS_PAGE,
   SETTING_STYLE_PAGE,
+  TEST_PAGE,
 }
 
 const routes: RouteRecordRaw[] = [
@@ -28,6 +31,7 @@ const routes: RouteRecordRaw[] = [
     path: '/mail', component: MainLayout, children: [
       {path: '', component: SendMail, name: MAIN_PAGE.name},
       {path: '/records', component: SendMailRecords, name: MAIL_RECORDS_PAGE.name},
+      {path:'/test',component:Test,name:TEST_PAGE.name},
       {
         path: '/setting', component: SettingLayout, children: [
           {path: '', component: SettingAccount, name: SETTING_PAGE.name},

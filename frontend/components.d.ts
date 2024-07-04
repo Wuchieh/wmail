@@ -18,5 +18,6 @@ declare module 'vue' {
     SettingStyle: typeof import('./src/components/SettingStyle.vue')['default']
     ShowEmailData: typeof import('./src/components/ShowEmailData.vue')['default']
     Snackbars: typeof import('./src/components/Snackbars.vue')['default']
+    Test: typeof import('./src/components/Test.vue')['default']
   }
 }

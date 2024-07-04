@@ -1,6 +1,6 @@
 <template>
   <v-container class="h-100" fluid>
-    <v-sheet class="mx-auto pa-2" width="100%" height="">
+    <v-sheet class="mx-auto pa-2 w-100 w-lg-66" width="100%" height="">
       <v-form fast-fail @submit.prevent="sendMail" class="">
         <v-text-field
           v-model="formData.to"
@@ -72,7 +72,7 @@ const sendMail = async () => {
         if (snackbar.value) {
           snackbar.value.Show({
             content: `寄送失敗, ${msg}`,
-            color: "success"
+            color: "danger"
           })
         }
       })

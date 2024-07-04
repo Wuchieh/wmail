@@ -2,19 +2,19 @@
   <v-responsive class="border rounded">
     <v-app :theme="theme">
       <v-app-bar class="px-3">
-          <v-img
-            src="@/assets/logo.png"
-            @click="go(MAIN_PAGE)"
-            width="50"
+        <v-img
+          src="@/assets/logo.png"
+          @click="go(MAIN_PAGE)"
+          width="50"
 
-            max-width="50"
-            max-height="64"
-            class="cursor-pointer me-3"/>
-          <v-btn
-            v-for="v in mainItems"
-            :prepend-icon="v.icon"
-            :text="v.title"
-            @click="go(v.to)"/>
+          max-width="50"
+          max-height="64"
+          class="cursor-pointer me-3"/>
+        <v-btn
+          v-for="v in mainItems"
+          :prepend-icon="v.icon"
+          :text="v.title"
+          @click="go(v.to)"/>
         <v-spacer></v-spacer>
         <v-menu>
           <template v-slot:activator="{ props }">
@@ -69,6 +69,7 @@ const theme = ref('dark')
 const mainItems = [
   {icon: "mdi-email-edit-outline", to: MAIN_PAGE, title: "寄信"},
   {icon: "mdi-history", to: MAIL_RECORDS_PAGE, title: "寄送紀錄"},
+  // {icon: "", to: TEST_PAGE, title: "TEST"},
 ]
 
 const themeTrigger = () => {

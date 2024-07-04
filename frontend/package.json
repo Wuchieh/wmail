@@ -4,10 +4,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync": "vue-tsc --noEmit && vite build && cap sync"
   },
   "dependencies": {
     "@capacitor/android": "^6.1.0",
+    "@capacitor/app": "^6.0.0",
     "@capacitor/core": "^6.1.0",
     "@capacitor/ios": "^6.1.0",
     "@capacitor/preferences": "^6.0.1",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@babel/types": "^7.24.0",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.1.0",
     "@types/node": "^20.11.25",
     "@vitejs/plugin-vue": "^5.0.4",
