@@ -76,11 +76,14 @@ router.beforeEach(async (to, from, next) => {
 
   // 如果帳戶資訊不完整，嘗試刷新
   if (app.account.email === '') {
-    try {
-      await app.refreshAccount()
-    } catch (err) {
-      console.error('Error refreshing account:', err)
-      return next(LOGIN_PAGE)
+    const resp = await app.refreshAccount()
+    if (resp) {
+      console.error('Error refreshing account:', resp)
+      if (to.name != LOGIN_PAGE.name) {
+        return next(LOGIN_PAGE)
+      } else {
+        return next()
+      }
     }
   }
 
@@ -91,6 +94,11 @@ router.beforeEach(async (to, from, next) => {
 
   // 其他情況，允許導航
   next()
+})
+
+router.afterEach(() => {
+  const app = useStore()
+  app.routerLoading = false
 })
 
 export default router

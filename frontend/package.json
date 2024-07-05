@@ -1,6 +1,6 @@
 {
   "name": "template",
-  "version": "0.0.0",
+  "version": "0.4.1",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -21,7 +21,7 @@
     "vue": "^3.4.21",
     "vue-i18n": "9",
     "vue-router": "4",
-    "vuetify": "^3.5.8"
+    "vuetify": "^3.6.11"
   },
   "devDependencies": {
     "@babel/types": "^7.24.0",

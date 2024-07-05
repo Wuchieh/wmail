@@ -47,8 +47,11 @@ function UpdateToken(header: string) {
   return account.apiV1AccountUpdateTokenGet(header)
 }
 
-function SendMail(to: string, subject: string, content: string) {
+function SendMail(to: string|string[], subject: string, content: string) {
   const token = useStore().getToken()
+  if(typeof to ==="string"){
+    to = [to]
+  }
   return email.apiV1MailSendPost(`Bearer ${token}`, {
     to,
     subject,

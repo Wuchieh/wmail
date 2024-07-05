@@ -284,10 +284,10 @@ export interface MailSendReq {
     'subject'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof MailSendReq
      */
-    'to'?: string;
+    'to'?: Array<string>;
 }
 /**
  * 

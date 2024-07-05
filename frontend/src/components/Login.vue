@@ -19,7 +19,7 @@
           text="登入"
           @click="login"/>
     </v-form>
-    <div class="position-absolute" style="bottom: 15px;right: 15px">V0.3.0</div>
+    <div class="position-absolute" style="bottom: 15px;right: 15px">V{{ version }}</div>
   </v-container>
   <snackbars ref="SnackbarsRef"/>
 </template>
@@ -33,6 +33,7 @@ import {MAIN_PAGE} from "@/plugins/router";
 import {useStore} from "@/plugins/store/store";
 import Snackbars from "@/components/Snackbars.vue";
 
+const version = process.env.APP_VERSION;
 type SnackbarsInstance = InstanceType<typeof Snackbars>
 const SnackbarsRef = ref<null | SnackbarsInstance>(null)
 

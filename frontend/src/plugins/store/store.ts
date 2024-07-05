@@ -7,8 +7,12 @@ import {MailEmail, MailRecord} from "@/api/swag";
 const KTOKEN = "token"
 const KTHEME = 'theme'
 const KTFS = 'text_field_style'
+const KSTS = "select_style"
 
-export {KTOKEN,KTHEME,KTFS}
+export {KTOKEN, KTHEME, KTFS, KSTS}
+
+export const textFieldStyle = ["filled", "outlined", "plain", "solo", "solo-inverted", "solo-filled"] as const;
+export type TextFieldStyleType = typeof textFieldStyle[number];
 
 export const SetData = (key: string, value: string) => {
   return Preferences.set({key, value})
@@ -19,6 +23,8 @@ export function GetData(key: string) {
 }
 
 export const useStore = defineStore('app', () => {
+  const routerLoading = ref(true)
+
   const account = ref({
     email: "",
     name: "",
@@ -103,19 +109,31 @@ export const useStore = defineStore('app', () => {
       })
   }
 
-  const defaults = ref({
+  const defaults = ref<{ [keys: string]: { variant: TextFieldStyleType } }>({
     VTextField: {
-      variant: '',
+      variant: 'outlined',
     },
+    VSelect: {
+      variant: 'outlined',
+    }
   })
 
-  GetData(KTFS).then(res => {
-    defaults.value.VTextField.variant = res.value ?? 'outlined'
-  }).catch(() => {
-    defaults.value.VTextField.variant = 'outlined'
-  });
+  function init() {
+    return new Promise(async (resolve) => {
+      defaults.value.VTextField.variant = (await GetData(KTFS)).value as TextFieldStyleType ?? 'outlined'
+      defaults.value.VSelect.variant = (await GetData(KSTS)).value as TextFieldStyleType ?? 'outlined'
+      resolve('success')
+    })
+  }
+
+  init()
+    .then()
+    .catch(err => {
+      console.error(err)
+    })
 
   return {
+    routerLoading,
     account,
     setToken,
     getToken,

@@ -1,5 +1,5 @@
 <template>
-  <v-responsive class="border rounded" max-height="calc(100vh - 63px)" >
+  <v-responsive class="border rounded" max-height="calc(100vh - 64px)" >
     <v-app>
       <v-navigation-drawer v-model="show">
         <v-list >
