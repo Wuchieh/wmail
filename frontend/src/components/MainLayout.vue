@@ -3,7 +3,9 @@
     <v-app :theme="theme">
       <v-app-bar class="px-3">
         <v-img
-          :src="theme === 'light' ?Logo:darkLogo"
+          :src="theme === 'light' ?'/logo.png':'/logo-dark.png'"
+
+
           @click="debugModeTrigger"
           width="50"
 
@@ -61,8 +63,6 @@
 import {GetData, KTHEME, SetData, useStore} from "@/plugins/store/store";
 import {onMounted, ref} from 'vue'
 import {useRouter} from "vue-router";
-import darkLogo from '@/assets/logo-dark.png'
-import Logo from '@/assets/logo.png'
 import {LOGIN_PAGE, MAIL_RECORDS_PAGE, MAIN_PAGE, SETTING_PAGE, TEST_PAGE} from "@/plugins/router";
 
 const {account, clearAccountData} = useStore()
