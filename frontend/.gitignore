@@ -3,7 +3,6 @@ node_modules
 /dist
 android
 wailsjs
-.env.production
 
 # local env files
 .env.local
