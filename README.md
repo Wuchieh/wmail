@@ -39,11 +39,19 @@ npx cap open android
 修改完成後就可以使用 Android Studio 打包應用成 apk 了
 ```
 # 展示
+## 登入
 ![login_page.png](images/login_page.png)
+## 寄信
 ![send_mail.png](images/send_mail.png)
+## 新增收件人
 ![add_recipient.png](images/add_recipient.png)
+## 選擇收件人
 ![set_recipient.png](images/set_recipient.png)
+## 查看寄送紀錄
 ![mail_records.png](images/mail_records.png)
+## 查看寄送紀錄詳情
 ![mail_records_info.png](images/mail_records_info.png)
+## 自訂一組建樣式
 ![custom_style.png](images/custom_style.png)
+## 亮色主題
 ![light_theme.png](images/light_theme.png)
