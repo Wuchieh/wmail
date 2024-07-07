@@ -3,8 +3,7 @@ import {useStore} from "@/plugins/store/store";
 
 
 const conf = new Configuration()
-conf.basePath = 'https://wmail_api.wuchieh.com'
-// conf.basePath = "http://localhost:1701"
+conf.basePath = import.meta.env.VITE_API_HOST
 const account = new AccountApi(conf)
 const email = new EmailApi(conf)
 
