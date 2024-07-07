@@ -41,6 +41,7 @@ watch(setSelectStyle, v => {
 
 onMounted(() => {
   setTextFieldStyle.value = defaults.VTextField.variant as TextFieldStyleType
+  setSelectStyle.value = defaults.VSelect.variant as TextFieldStyleType
 })
 </script>
 

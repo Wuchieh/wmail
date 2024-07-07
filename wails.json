@@ -1,7 +1,7 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
   "name": "wmail",
-  "outputfilename": "wmail",
+  "outputfilename": "WMail",
   "frontend:install": "pnpm install",
   "frontend:build": "pnpm run build",
   "frontend:dev:watcher": "pnpm run dev",
@@ -9,5 +9,12 @@
   "author": {
     "name": "Wuchieh",
     "email": "q20001116@gmail.com"
+  },
+  "info": {
+    "comments": "Wuchieh 製作 email 寄送工具, Power by resend",
+    "companyName": "Wuchieh Company",
+    "copyright": "版權所有©2024 Wuchieh",
+    "productName": "WMail",
+    "productVersion": "0.4.2"
   }
 }
