@@ -6,7 +6,7 @@
       indeterminate
     ></v-progress-circular>
   </div>
-  <v-defaults-provider :defaults="defaults">
+  <v-defaults-provider :defaults="defaults" v-else>
     <v-app>
       <v-main>
         <router-view/>
