@@ -51,7 +51,7 @@ npx cap open android
 ![mail_records.png](images/mail_records.png)
 ## 查看寄送紀錄詳情
 ![mail_records_info.png](images/mail_records_info.png)
-## 自訂一組建樣式
+## 自定義組件樣式
 ![custom_style.png](images/custom_style.png)
 ## 亮色主題
 ![light_theme.png](images/light_theme.png)
